@@ -20,7 +20,8 @@ function App() {
 	let [글제목, 글변경] = useState(['남자코트 추천','강남 우동맛집', '파이썬 독학']);
 	let [따봉, 따봉변경] = useState(0);
 	let [modal, setModal] = useState(false);
-	let a = b;
+	// 커밋 테스트
+	
   return (
     <div className="App">
       <div className="black-nav">
