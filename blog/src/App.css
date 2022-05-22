@@ -20,6 +20,14 @@ div {
 	text-align: left;
 }
 
+.modalStyle {
+	cursor: pointer;
+}
+
+.qkqh{
+	display: flex;
+}
+
 .black-nav {
 	display: flex;
 	background: black;
