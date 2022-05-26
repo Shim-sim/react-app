@@ -3,48 +3,59 @@ import { useState } from "react";
 import './App.css';
 import { Button, Navbar, Container, Nav } from 'react-bootstrap';
 import data from './data.js';
+import Detail from './pages/Detail.js'
+import Card from './components/Card.js';
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 
 
 function App() {
 	
 	let [shoes] = useState(data);
+	let navigate = useNavigate();
 	
   return (
     <div className="App">
+
 			<Navbar bg="dark" variant="dark">
 				<Container>
-				<Navbar.Brand href="#home">ShowShop</Navbar.Brand>
+				<Navbar.Brand href="#homeW">ShowShop</Navbar.Brand>
 				<Nav className="me-auto">
-					<Nav.Link href="#home">Home</Nav.Link>
-					<Nav.Link href="#features">Cart</Nav.Link>
+					<Nav.Link onClick={()=> {navigate('/')}}>Home</Nav.Link>
+					<Nav.Link onClick={()=> {navigate('/detail')}}>Detail</Nav.Link>
 				</Nav>
 				</Container>
 			</Navbar>
 			
-			<div className="main-bg"></div>
 			
-			<div className="container">
-				<div className="row">
-					<div className="col-md-4">
-						<img src="https://codingapple1.github.io/shop/shoes1.jpg" width="80%"/>
-						<h4>{shoes[0].title}</h4>
-						<p>{shoes[0].price}</p>
-					</div>
-					<div className="col-md-4">
-						<img src="https://codingapple1.github.io/shop/shoes2.jpg" width="80%"/>
-						<h4>{shoes[1].title}</h4>
-						<p>{shoes[1].price}</p>
-					</div>
-					<div className="col-md-4">
-						<img src="https://codingapple1.github.io/shop/shoes3.jpg" width="80%"/>
-						<h4>{shoes[2].title}</h4>
-						<p>{shoes[2].title}</p>
-					</div>
-				</div>
-			</div>
 			
+			<Routes>
+				<Route path="/" element={
+				<>
+				<div className="main-bg"></div>
+				<div className="container">
+					<div className="row">
+						{ shoes.map((a,i)=> {
+								return <Card shoes={shoes[i]} i={i+1}/>
+						})}
+					</div>
+		 		</div>
+				</>
+				} />
+				<Route path="/detail" element={<Detail/>} />
+				<Route path="/about" element={<About/>} />
+			</Routes>
+
     </div>
   );
 }
+
+function About() {
+	return (
+		<div>
+			<h4>회사정보임</h4>
+		</div>
+	)
+}
+
 
 export default App;
