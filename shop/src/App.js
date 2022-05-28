@@ -8,9 +8,10 @@ import Card from './components/Card.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 
 
+
 function App() {
 	
-	let [shoes] = useState(data);
+	let [shoes, setShoes] = useState(data);
 	let navigate = useNavigate();
 	
   return (
@@ -25,37 +26,45 @@ function App() {
 				</Nav>
 				</Container>
 			</Navbar>
-			
+		  <button onClick={()=> {
+					let copy = [...shoes]; 
+					copy.sort((a,b)=> a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1);
+					setShoes(copy);
+					console.log(copy);
+				}}>가나다정렬</button> 
 			
 			
 			<Routes>
 				<Route path="/" element={
 				<>
-				<div className="main-bg"></div>
+				<div className="main-bg"></div>		
 				<div className="container">
 					<div className="row">
 						{ shoes.map((a,i)=> {
-								return <Card shoes={shoes[i]} i={i+1}/>
+								return <Card shoes={shoes[i]} i={i+1} key={a.id}/>
 						})}
 					</div>
 		 		</div>
 				</>
 				} />
-				<Route path="/detail" element={<Detail/>} />
-				<Route path="/about" element={<About/>} />
+				<Route path="/detail/:id" element={<Detail shoes={shoes}/>} />
+				
+				
 			</Routes>
 
     </div>
   );
 }
 
-function About() {
+function Event() {
 	return (
 		<div>
-			<h4>회사정보임</h4>
+			<h4>오늘의 이벤트</h4>
+			<Outlet></Outlet>
 		</div>
 	)
 }
 
 
+   
 export default App;
