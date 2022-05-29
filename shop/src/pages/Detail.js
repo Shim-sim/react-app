@@ -6,20 +6,32 @@ import { useParams } from "react-router-dom";
 
 function Detail(props) {
 	
-	useEffect(()=> {
-		console.log('안뇽');
-	})
-	
-	let [count, setCount] = useState(0);
-	
+	let [alert, setAlert] = useState(true);
+	let [name, setName] = useState('');
 	let {id} = useParams();
 	let 찾은상품 = props.shoes.find((x)=> x.id == id);
+	
+	 useEffect(()=> {
+			let timer = setTimeout(()=>{ setAlert(false) },3000);
+		 	return ()=> {
+				clearTimeout(timer);
+			}
+	 },[])
+	
+	
+	
 
 	
 	return(
 		<div className="container">
-			{count}
-			<button onClick={()=>{ setCount(count+1) }}>버튼이오</button>
+			{
+				alert == true 
+				?	<div className="alert alert-warning">
+						3초이내 구매시 할인
+					</div> 
+				: null
+			}
+		
 			<div className="row">
 				<div className="col-md-6">
 					<img src={`https://codingapple1.github.io/shop/shoes${+id+1}.jpg`} width="100%" />
