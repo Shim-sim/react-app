@@ -43,15 +43,15 @@ function Detail(props) {
 			</div>
 			
 			<Nav variant="tabs" defaultActiveKey="link0">
-				<Nav.Item>
-					<Nav.Link onClick={()=>{ setTap(0) }} eventKey="link0" >버튼0</Nav.Link>
-				</Nav.Item>
-				<Nav.Item>
-					<Nav.Link onClick={()=>{ setTap(1) }} eventKey="link1">버튼1</Nav.Link>
-				</Nav.Item>
-				<Nav.Item>
-					<Nav.Link onClick={()=>{ setTap(2) }} eventKey="link2">버튼2</Nav.Link>
-				</Nav.Item>
+				{
+					[0,1,2].map((a,i)=> {
+						return(
+							<Nav.Item key={a}>
+								<Nav.Link  onClick={()=>{ setTap(a) }} eventKey="link0">버튼{i}</Nav.Link>
+							</Nav.Item>
+						)
+					})
+				}
 			</Nav>
 			<TabContent tap={tap}/>
 			
@@ -60,12 +60,14 @@ function Detail(props) {
 		</div>
 	)
 }
-function TabContent(props) {
-		if (props.tap == 0) {
+function TabContent({tap}) {
+	if (tap == 0) {
 		return <div>내용0</div>
-	} else if (props.tap == 1) {
+	} 
+	if (tap == 1) {
 		return <div>내용1</div>
-	} else if (props.tap == 2) {
+	}
+	if (tap == 2) {
 		return <div>내용2</div>
 	}
 }
