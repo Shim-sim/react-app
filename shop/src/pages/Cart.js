@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 import { Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { increase } from "./../store/userSlice.js"
-import { addCount } from "./../store.js"
+import { addCount, deleteItem } from "./../store/cartSlice.js"
 
 function Cart() {
 	
@@ -10,10 +12,7 @@ function Cart() {
 	
 	return(
 		<div>
-			<h6>{state.user.name} {state.user.age}의 장바구니</h6>
-			<button onClick={()=>{
-					dispatch(increase(10))
-				}}>버튼</button>
+			
 			<Table>
 					<thead>
 						<tr>
@@ -32,8 +31,11 @@ function Cart() {
 										<td>{state.cart[i].count}</td>
 										<td>
 											<button onClick={()=>{
-													dispatch(addCount())
-												}}>+</button>
+													dispatch(addCount(state.cart[i].id))
+												}}>추가</button>
+											<button onClick={()=>{
+													dispatch(deleteItem(state.cart[i]))
+												}}>삭제</button>
 										</td>
 									</tr>
 								)
