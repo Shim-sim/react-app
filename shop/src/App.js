@@ -11,22 +11,20 @@ import Cart from './pages/Cart.js'
 
 
 function App() {
-	let mySet = []
+	
+	useEffect(()=> {
+		localStorage.setItem('watched',JSON.stringify([]))
+	},[])
+
 	let [shoes, setShoes] = useState(data);
 	let navigate = useNavigate();
 	let [add, setAdd] = useState(2);
   let [load, setLoad] = useState(false)
 	let [clickButton, setClickButton] = useState(0);
 	let [ui, setUi] = useState(true)
-	let [local] = useState('')
-	const [recent, setRecent] = useState(()=> {
-		JSON.parse(localStorage.getItem("watched"))
-	});
 	
-		useEffect(()=> {
-			localStorage.setItem("watched", JSON.stringify(recent))
-   	}, [recent]);
 	
+
 	
   return (
     <div className="App">

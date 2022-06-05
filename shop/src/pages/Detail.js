@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useEffect, useState} from "react";
+import { useEffect, useState, useHistory} from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
@@ -24,6 +24,8 @@ function Detail(props) {
 		localStorage.setItem('watched',JSON.stringify(myArr))
 	},[])
 	
+		
+	
 	
 	useEffect(()=>{
 		setTimeout(()=>{ setFade('end') },500)
@@ -41,6 +43,7 @@ function Detail(props) {
 				<div className="col-md-6">
 					<img src={`https://codingapple1.github.io/shop/shoes${+id+1}.jpg`} width="100%" />
 				</div>
+					
 				<div className="col-md-6">
 					<h4 className="pt-5">{찾은상품.title}</h4>
 					<p>{찾은상품.content}</p>
