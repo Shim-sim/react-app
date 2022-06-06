@@ -8,14 +8,14 @@ import Card from './components/Card.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import axios from 'axios'
 import Cart from './pages/Cart.js'
+import { useQuery } from "react-query"
+
+const cartFromLocalStorage = JSON.parse(localStorage.getItem('watched'))
 
 
 function App() {
 	
-	useEffect(()=> {
-		localStorage.setItem('watched',JSON.stringify([]))
-	},[])
-
+	let [watched, setWatched] = useState([cartFromLocalStorage])
 	let [shoes, setShoes] = useState(data);
 	let navigate = useNavigate();
 	let [add, setAdd] = useState(2);
@@ -23,18 +23,31 @@ function App() {
 	let [clickButton, setClickButton] = useState(0);
 	let [ui, setUi] = useState(true)
 	
+	let result = useQuery('작명',()=>
+		axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
+		return a.data
+		})
+	)
+	
+	useEffect(()=> {
+		localStorage.setItem('watched',JSON.stringify([]))
+	},[watched])
 	
 
 	
   return (
     <div className="App">
-			<Navbar bg="dark" variant="dark">
+			<Navbar bg="light" variant="light">
 				<Container>
 				<Navbar.Brand onClick={()=> {navigate('/')}}>ShowShop</Navbar.Brand>
 				<Nav className="me-auto">
 					<Nav.Link onClick={()=> {navigate('/')}}>Home</Nav.Link>
 					<Nav.Link onClick={()=> {navigate('/cart')}}>Cart</Nav.Link>
-					
+				</Nav>
+				<Nav className="ms-auto">
+					{ result.isLoading && '로딩중'}
+					{ result.error && '에러남'}
+					{ result.data && 'result.data.name'}
 				</Nav>
 				</Container>
 			</Navbar>
