@@ -1,30 +1,34 @@
 /* eslint-disable */
 import { useEffect, useState, useHistory} from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Nav } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux"
 import { addItem } from "./../store/cartSlice.js"
+import './../pages/Detail.css';
 
 
 function Detail(props) {
-	
 	
 	let [fade, setFade] = useState('')
 	let [tap, setTap] = useState(0)
 	let {id} = useParams();
 	let 찾은상품 = props.shoes.find((x)=> x.id == id);
 	let dispatch = useDispatch()
+	let navigate = useNavigate();
 	
+	
+	//Detail.js 로드시 실행
 	useEffect(()=>{
 		let myArr = localStorage.getItem('watched')
-		myArr = JSON.parse(myArr)
-		myArr.push(찾은상품.id)
+		if (myArr == null) {myArr = []} else {myArr = JSON.parse(myArr)}
+		myArr.push(id)
 		myArr = new Set(myArr)
 		myArr = Array.from(myArr)
 		localStorage.setItem('watched',JSON.stringify(myArr))
 	},[])
 	
-		
+	//localStorage에 있는 정보를 새로운 array에 저장
+	let [newArr, setNewArr] = useState(JSON.parse(localStorage.getItem('watched')))
 	
 	
 	useEffect(()=>{
@@ -35,10 +39,23 @@ function Detail(props) {
 	}, [])
 	
 	
-	
 	return(
-		<div className={`container start ${fade}`}>
-			
+		<div className={`container`}>
+			<div className="lasted">
+			<h6>최근 본 상품</h6>
+			{/*newArr사용해서 반복문을 돌려서 화면에 최근본 상품을 띄우기*/}
+			{
+					newArr && newArr.map((a,i)=> {
+					return(
+					<div className="row" key={i}>
+						<img src={`https://codingapple1.github.io/shop/shoes${+a+1}.jpg`} width="100%" />
+						<h5>{props.shoes[a].title}</h5>
+            <p>{props.shoes[a].price}</p>
+					</div>
+					)
+				})
+			}
+			</div>
 			<div className="row">
 				<div className="col-md-6">
 					<img src={`https://codingapple1.github.io/shop/shoes${+id+1}.jpg`} width="100%" />
@@ -50,7 +67,8 @@ function Detail(props) {
 					<p>{찾은상품.price}</p>
 					<button className="btn btn-danger" onClick={()=>{
 						dispatch(addItem({id : 찾은상품.id, name : 찾은상품.title, count : 1,}))
-						}}>주문하기</button> 
+						}}>주문하기</button>
+					<button className="btn btn-danger" onClick={()=> {navigate('/')}}>뒤로가기</button>
 				</div>
 			</div>
 			
