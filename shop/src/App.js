@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useTransition, useDeferredValue } from "react";
 import './App.css';
 import { Button, Navbar, Container, Nav } from 'react-bootstrap';
 import data from './data.js';
@@ -25,6 +25,7 @@ function App() {
 	
 	let [name, setName] = useState('')
 	let [isPending, startTransition] = useTransition()
+	let state = useDeferredValue(name)
 	
 	let result = useQuery('작명',()=>
 		axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
@@ -95,8 +96,9 @@ function App() {
 				}}/>
 			
 				{
+				isPending ? '로딩중' :
 				a.map(()=>{
-					return <div>{name}</div>
+					return <div>{state}</div>
 				})
 			}
 				
