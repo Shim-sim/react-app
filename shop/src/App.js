@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import './App.css';
 import { Button, Navbar, Container, Nav } from 'react-bootstrap';
 import data from './data.js';
@@ -10,12 +10,12 @@ import axios from 'axios'
 import Cart from './pages/Cart.js'
 import { useQuery } from "react-query"
 
-const cartFromLocalStorage = JSON.parse(localStorage.getItem('watched'))
+let a = new Array(10000).fill(0)
 
 
 function App() {
 	
-	let [watched, setWatched] = useState([cartFromLocalStorage])
+	//let [watched, setWatched] = useState([cartFromLocalStorage])
 	let [shoes, setShoes] = useState(data);
 	let navigate = useNavigate();
 	let [add, setAdd] = useState(2);
@@ -23,15 +23,18 @@ function App() {
 	let [clickButton, setClickButton] = useState(0);
 	let [ui, setUi] = useState(true)
 	
+	let [name, setName] = useState('')
+	let [isPending, startTransition] = useTransition()
+	
 	let result = useQuery('작명',()=>
 		axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
 		return a.data
 		})
 	)
 	
-	useEffect(()=> {
-		localStorage.setItem('watched',JSON.stringify([]))
-	},[watched])
+	// useEffect(()=> {
+	// 	localStorage.setItem('watched',JSON.stringify([]))
+	// },[watched])
 	
 
 	
@@ -47,7 +50,7 @@ function App() {
 				<Nav className="ms-auto">
 					{ result.isLoading && '로딩중'}
 					{ result.error && '에러남'}
-					{ result.data && 'result.data.name'}
+					{ result.data && result.data.name}
 				</Nav>
 				</Container>
 			</Navbar>
@@ -60,7 +63,8 @@ function App() {
 						<div className="row">
 							{ shoes.map((a,i)=> {
 									return <Card shoes={shoes[i]} idx={i} i={i} key={a.id}/>
-							})}
+							})
+							}
 						</div>
 					</div>
 					
@@ -83,7 +87,19 @@ function App() {
 				<Route path="/detail/:id" element={<Detail shoes={shoes}/>} />
 				<Route path="/cart" element={<Cart/>} />
 			</Routes>
-					
+				
+				<input onChange={(e)=>{ 
+					startTransition(()=>{
+						setName(e.target.value)
+					})
+				}}/>
+			
+				{
+				a.map(()=>{
+					return <div>{name}</div>
+				})
+			}
+				
     </div>
   );
 }
