@@ -1,24 +1,36 @@
 /* eslint-disable */
-import { useState } from "react";
 import './App.css';
+import { useState } from "react";
 import {Button, Navbar, Nav, Container} from 'react-bootstrap/'
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import data from './shoes.js'
 import Card from './components/Card'
 import Detail from './components/Detail'
-import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
+import axios from 'axios'
 
 
 
+let add = 2;
 
 function App(){
 	
-	let [shoes, setShoes] = useState(data)
+	const [shoes, setShoes] = useState(data)
+	const navigate = useNavigate();
 	
-	let navigate = useNavigate();
+	const onAddShoes = () => {
+		axios.get(`https://codingapple1.github.io/shop/data${add}.json`)
+		.then((result)=>{
+			let copy = shoes.concat(result.data)
+			setShoes(copy)
+			add += 1
+		})
+		.catch((err)=>{ console.log('데이터 요청에 실패 했습니다.') })
+		
+	}
 	
 	
   return (
-    <div>
+    <div className="App">
       <Navbar bg="dark" variant="dark">
         <Container>
         <Navbar.Brand href="#home">Shop</Navbar.Brand>
@@ -31,7 +43,7 @@ function App(){
 			
 			<Routes>
 				<Route path="/" element={
-					< >
+					<>
 					<div className="main-bg"></div>
 					<div className="container">
 						<div className="row">
@@ -40,14 +52,16 @@ function App(){
 							<Card shoes={shoes[i]} i={i} key={shoes[i].id} />
 							)})
 						}		
+						</div>
 					</div>
-					</div>
+					{
+					add == 4 ? null : <button onClick={onAddShoes}>상품 더보기</button>
+					}
 					</>
 					}/>
 				<Route path="/detail/:id" element={ <Detail shoes={shoes}/> }/>
 			</Routes>
 			
-			 
     </div>
   )
 }
