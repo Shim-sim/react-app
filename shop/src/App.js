@@ -1,13 +1,15 @@
 /* eslint-disable */
 import './App.css';
-import { useState } from "react";
+import { createContext, useState } from "react";
 import {Button, Navbar, Nav, Container} from 'react-bootstrap/'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import data from './shoes.js'
 import Card from './components/Card'
+import Cart from './components/Cart'
 import Detail from './components/Detail'
 import axios from 'axios'
 
+let  Context1 = createContext()
 
 
 let add = 2;
@@ -16,6 +18,7 @@ function App(){
 	
 	const [shoes, setShoes] = useState(data)
 	const navigate = useNavigate();
+	
 	
 	const onAddShoes = () => {
 		axios.get(`https://codingapple1.github.io/shop/data${add}.json`)
@@ -60,6 +63,7 @@ function App(){
 					</>
 					}/>
 				<Route path="/detail/:id" element={ <Detail shoes={shoes}/> }/>
+				<Route path="/cart" element={ <Cart/> } />
 			</Routes>
 			
     </div>
