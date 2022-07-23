@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import './App.css';
 import { createContext, useState } from "react";
 import {Button, Navbar, Nav, Container} from 'react-bootstrap/'
@@ -36,10 +37,10 @@ function App(){
     <div className="App">
       <Navbar bg="dark" variant="dark">
         <Container>
-        <Navbar.Brand href="#home">Shop</Navbar.Brand>
+        <Navbar.Brand onClick={()=>{navigate('/')}}>Shop</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
-					<Nav.Link onClick={()=>{navigate('/detail/0')}}>Detail</Nav.Link>
+          <Nav.Link onClick={()=>{navigate('detail/0')}}>Detail</Nav.Link>
+					<Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
         </Nav>
         </Container>
       </Navbar>

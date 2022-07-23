@@ -3,6 +3,8 @@ import { React, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
+import { addItem } from './../store.js'
+import { useSelector, useDispatch } from 'react-redux'
 
 const Detail = ({shoes}) => {
 	
@@ -11,21 +13,23 @@ const Detail = ({shoes}) => {
 	const [discount, setDiscount] = useState(true)
 	const [tap, setTap] = useState(0)
 	const [fade, setFade] = useState('')
+	const dispatch = useDispatch()
 	
 	useEffect(()=>{
-		let timer = setTimeout(()=> {setDiscount(false)}, 3000)
+		let disCountTimer = setTimeout(()=> {setDiscount(false)}, 2300)
+		let fadeTimer = setTimeout(()=>{ setFade('end') }, 100)
 		return () => {
-			clearTimeout(timer)
+			clearTimeout(disCountTimer, fadeTimer)
 		}
 	},[])
 	
-	useEffect(()=> {
-		let timer = setTimeout(()=>{ setFade('end') }, 100)
-		return ()=> {
-			clearTimeout(timer)
-			setFade('')
-		}
-	},[])
+	// useEffect(()=> {
+	// 	let timer = setTimeout(()=>{ setFade('end') }, 100)
+	// 	return ()=> {
+	// 		clearTimeout(timer)
+	// 		setFade('')
+	// 	}
+	// },[])
 	
 	return (
 		<div className={`container start ${fade}`}>
@@ -42,7 +46,9 @@ const Detail = ({shoes}) => {
 					<h4 className="pt-5">{item.title}</h4>
 					<p>{item.content}</p>
 					<p>{item.price}</p>
-					<button className="btn btn-danger">주문하기</button> 
+					<button className="btn btn-danger" onClick={()=>{
+						dispatch(addItem({id: item.id , name: item.title , price: item.price , count: 1}))}}>주문하기
+					</button> 
 				</div>
 			</div>
 			

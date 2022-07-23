@@ -1,26 +1,28 @@
 /* eslint-disable */
 
+import { useState } from "react";
 import {Table} from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeName, plusCount } from './../store.js'
+import { changeName, increase } from './../store/userSlice.js'
+import { addCount, deleteItem } from './../store.js'
 
 const Cart = () => {
 	
 const data =	useSelector(state => state.data)
-const name = useSelector(state => state.user)
-
+const user = useSelector(state => state.user)
 const dispatch = useDispatch()
 
 	return (
 		<div>
-			{name}의 장바구니
+			{user.name}의 장바구니
 			<Table>
       <thead>
         <tr>
           <th>#</th>
           <th>상품명</th>
+					<th>가격</th>
           <th>수량</th>
-          <th>변경하기</th>
+          <th>수량변경</th>
         </tr>
       </thead>
       <tbody>
@@ -29,9 +31,11 @@ const dispatch = useDispatch()
 					<tr key={data[i].id}>
 						<td>{data[i].id}</td>
 						<td>{data[i].name}</td>
+						<td>{data[i].price}</td>			 
 						<td>{data[i].count}</td>
 						<td>
-							<button onClick={()=>{dispatch(plusCount())}}>+</button>
+							<button onClick={()=>{dispatch(addCount(data[i].id))}}>+</button>
+							<button onClick={()=>{dispatch(deleteItem(data[i]))}}>x</button>
 						</td>
 					</tr>
 				 )	

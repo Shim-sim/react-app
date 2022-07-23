@@ -1,14 +1,7 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit'
+/* eslint-disable */
 
-const user = createSlice({
-	name: 'user',
-	initialState: 'shim',
-	reducers: {
-		changeName(state){
-			return 'shim sung bo'
-		},
-	}
-})
+import { configureStore, createSlice } from '@reduxjs/toolkit'
+import user from './store/userSlice.js'
 
 const stock = createSlice({
 	name: 'stock',
@@ -18,22 +11,29 @@ const stock = createSlice({
 const data = createSlice({
 	name: 'data',
 	initialState: [
-  	{id : 0, name : 'White and Black', count : 2},
-  	{id : 2, name : 'Grey Yordan', count : 1},
+  	{id : 0, name : 'White and Black', price: 120000, count : 2},
+  	{id : 2, name : 'Grey Yordan', price: 130000, count : 1},
 	],
-	reducers: {
-		plusCount(state){
-			return (
-				
-			)
+	reducers: { //action.payload는 파라미터 자리로 내가 입력한 값을 전달 받는다. 따라서 그 갚에 따라 결과가 달라짐
+		addCount(state, action) {
+			let index = state.findIndex(a => a.id === action.payload) 
+			state[index].count++
+		},
+		addItem(state, action) {
+			let index = state.findIndex(a => a.id === action.payload.id)
+			if (index >= 0) {
+				state[index].count += 1
+			} else if (index < 0) {
+				state.push(action.payload)
+			}
+		},
+		deleteItem(state, action) {
+			state.pop(action.payload)
 		}
 	}
-	
-})
+	})
 
-export let { changeName } = user.actions
-export let { plusCount } = data.actions
-
+export let { addCount, addItem, deleteItem } = data.actions
 
 export default configureStore({
   reducer: {
