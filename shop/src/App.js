@@ -16,6 +16,7 @@ function App(){
 	
 	const [shoes, setShoes] = useState(data)
 	const navigate = useNavigate();
+	
 	const onAddShoes = () => {
 		axios.get(`https://codingapple1.github.io/shop/data${add}.json`)
 		.then((result)=>{

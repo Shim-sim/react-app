@@ -3,8 +3,7 @@
 import { useState } from "react";
 import {Table} from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeName, increase, decrease } from './../store/userSlice.js'
-import { addCount, deleteItem } from './../store.js'
+import { increaseCount, decreaseCount, deleteItem } from './../store.js'
 
 const Cart = () => {
 	
@@ -33,13 +32,14 @@ const dispatch = useDispatch()
 						<td>{data[i].name}</td>
 						<td>{data[i].price}</td>			 
 						<td>{data[i].count}</td>
-						<td>
-							<button onClick={()=>{dispatch(addCount(data[i].id))}}>+</button>
-							<button onClick={()=>{dispatch(deleteItem(data[i]))}}>x</button>
+						<td className="cart-button">
+							<button onClick={()=>{dispatch(increaseCount(data[i].id))}}>+</button>
+							<button onClick={()=>{dispatch(decreaseCount(data[i].id))}}>-</button>
+							<button onClick={()=>{dispatch(deleteItem(data[i]))}}>삭제</button>
 						</td>
 					</tr>
-				 )	
-			}
+				)	
+			} 
 			</tbody>
 			</Table>
 		</div>

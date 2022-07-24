@@ -7,15 +7,15 @@ const user = createSlice({
 		changeName(state){
 			state.name = 'shimsungbo'
 		},
-		increase(state, action){
-			state.age += action.payload
-		},
-		decrease(state, action) {
-			state.age -= action.payload
-		}
+		// increase(state, action){
+		// 	state.age += action.payload
+		// },
+		// decrease(state, action) {
+		// 	state.age -= action.payload
+		// } 연습용 
 	}
 })
 
-export let { changeName, increase, decrease } = user.actions
+export let { changeName } = user.actions
 
 export default user

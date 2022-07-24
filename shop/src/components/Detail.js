@@ -36,7 +36,6 @@ const Detail = ({shoes}) => {
 	},[])
 	
 	let [recentArr, setRecentArr] = useState(JSON.parse(localStorage.getItem('watched')))
-	console.log(recentArr)
 	
 	return (
 		<div className={`container start ${fade}`}>

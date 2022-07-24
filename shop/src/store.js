@@ -15,9 +15,13 @@ const data = createSlice({
   	{id : 2, name : 'Grey Yordan', price: 130000, count : 1},
 	],
 	reducers: { //action.payload는 파라미터 자리로 내가 입력한 값을 전달 받는다. 따라서 그 갚에 따라 결과가 달라짐
-		addCount(state, action) {
+		increaseCount(state, action) {
 			let index = state.findIndex(a => a.id === action.payload) 
 			state[index].count++
+		},
+		decreaseCount(state, action) {
+			let index = state.findIndex(a => a.id === action.payload) 
+			state[index].count--
 		},
 		addItem(state, action) {
 			let index = state.findIndex(a => a.id === action.payload.id)
@@ -33,7 +37,7 @@ const data = createSlice({
 	}
 	})
 
-export let { addCount, addItem, deleteItem } = data.actions
+export let { increaseCount, addItem, deleteItem, decreaseCount } = data.actions
 
 export default configureStore({
   reducer: {

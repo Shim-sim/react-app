@@ -26,4 +26,12 @@
 	text-align: center;
 }
 
+.delete {
+	margin-left: 10px;
+}
 
+.cart-button button{
+	margin: 2px;
+	border: 1px solid #1a73e8;
+	border-radius: 4px;
+}
