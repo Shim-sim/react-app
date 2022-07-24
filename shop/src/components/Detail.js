@@ -5,6 +5,7 @@ import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
 import { addItem } from './../store.js'
 import { useSelector, useDispatch } from 'react-redux'
+import Recent from './../components/Recent.js'
 
 const Detail = ({shoes}) => {
 	
@@ -18,18 +19,24 @@ const Detail = ({shoes}) => {
 	useEffect(()=>{
 		let disCountTimer = setTimeout(()=> {setDiscount(false)}, 2300)
 		let fadeTimer = setTimeout(()=>{ setFade('end') }, 100)
+		
 		return () => {
 			clearTimeout(disCountTimer, fadeTimer)
 		}
 	},[])
 	
-	// useEffect(()=> {
-	// 	let timer = setTimeout(()=>{ setFade('end') }, 100)
-	// 	return ()=> {
-	// 		clearTimeout(timer)
-	// 		setFade('')
-	// 	}
-	// },[])
+	useEffect(()=> {
+		let myArr = localStorage.getItem('watched')
+		// myArr = JSON.parse(myArr) 이 부분에 대한 조건식은 아래에
+		if (myArr == null) {myArr = []} else {myArr = JSON.parse(myArr)}
+		myArr.push(id)
+		myArr = new Set(myArr)
+		myArr = Array.from(myArr)
+		localStorage.setItem('watched', JSON.stringify(myArr))
+	},[])
+	
+	let [recentArr, setRecentArr] = useState(JSON.parse(localStorage.getItem('watched')))
+	console.log(recentArr)
 	
 	return (
 		<div className={`container start ${fade}`}>
@@ -38,6 +45,7 @@ const Detail = ({shoes}) => {
 				2초 이내 구매시 할인
 		 </div>
 		}	
+			<Recent recentArr={recentArr}/>
 			<div className="row">
 				<div className="col-md-6">
 					<img src={`https://codingapple1.github.io/shop/shoes${Number(id)+1}.jpg`} width="100%" />

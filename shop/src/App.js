@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import './App.css';
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import {Button, Navbar, Nav, Container} from 'react-bootstrap/'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import data from './shoes.js'
@@ -10,37 +10,31 @@ import Cart from './components/Cart'
 import Detail from './components/Detail'
 import axios from 'axios'
 
-let  Context1 = createContext()
-
-
 let add = 2;
 
 function App(){
 	
 	const [shoes, setShoes] = useState(data)
 	const navigate = useNavigate();
-	
-	
 	const onAddShoes = () => {
 		axios.get(`https://codingapple1.github.io/shop/data${add}.json`)
 		.then((result)=>{
-			let copy = shoes.concat(result.data)
-			setShoes(copy)
+			setShoes(shoes => shoes.concat(result.data))
 			add += 1
 		})
 		.catch((err)=>{ console.log('데이터 요청에 실패 했습니다.') })
 		
 	}
 	
-	
   return (
     <div className="App">
-      <Navbar bg="dark" variant="dark">
+      <Navbar className="nav" bg="dark" variant="dark">
         <Container>
         <Navbar.Brand onClick={()=>{navigate('/')}}>Shop</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link onClick={()=>{navigate('detail/0')}}>Detail</Nav.Link>
+          <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
 					<Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
+					<Nav.Link>My Page</Nav.Link>
         </Nav>
         </Container>
       </Navbar>

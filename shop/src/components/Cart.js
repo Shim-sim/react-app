@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {Table} from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeName, increase } from './../store/userSlice.js'
+import { changeName, increase, decrease } from './../store/userSlice.js'
 import { addCount, deleteItem } from './../store.js'
 
 const Cart = () => {
@@ -22,7 +22,7 @@ const dispatch = useDispatch()
           <th>상품명</th>
 					<th>가격</th>
           <th>수량</th>
-          <th>수량변경</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>

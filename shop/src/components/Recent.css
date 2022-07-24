@@ -1,0 +1,14 @@
+.lasted {
+  width: 25vw;
+	height: auto;
+	background-color: rgb(235, 217, 199);
+	position: fixed;
+	bottom: 150px;
+	right: -1px;
+}
+
+.lasted img {
+  width: 95%;
+	margin: 3px auto;
+	border-radius: 35%;
+}
